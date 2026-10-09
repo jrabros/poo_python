@@ -1,0 +1,16 @@
+# Cache e arquivos temporários do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes Virtuais (se você usar no futuro)
+venv/
+env/
+.venv/
+
+# Configurações locais da IDE (opcional)
+.vscode/
+
+# Histórico de testes e cobertura de código
+.pytest_cache/
+.coverage
