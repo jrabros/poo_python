@@ -31,3 +31,16 @@ class Caminhao(Transporte):
         else:
             self.frete = self.distance * __class__.fator
             return f'R${self.frete:,.2f}'
+
+
+class Drone(Transporte):
+    fator = 9.5
+    def __init__(self, distance):
+        super().__init__(distance)
+
+    def calc_frete(self):
+        if self.distance > 10:
+            return 'Não será possível, distancia máxima de 10km'
+        else:
+            self.frete = self.distance * __class__.fator
+            return f'R${self.frete:,.2f}'
