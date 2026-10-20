@@ -33,6 +33,7 @@ class Boleto(Pagamento):
     def pagar(self, valor):
         try:
             self.valor = valor
+            # código para efetuar o pagamento
             return f'Pagamento de {self.fvalor} via {__class__.__name__} foi CONFIRMADO'
         except Exception as e:
             return f'Falha no pagamento de {self.fvalor} via {__class__.__name__}'
@@ -43,6 +44,7 @@ class Pix(Pagamento):
     def pagar(self, valor):
         try:
             self.valor = valor
+            # código para efetuar o pagamento
             return f'Pagamento de {self.fvalor} via {__class__.__name__} foi CONFIRMADO'
         except Exception as e:
             return f'Falha no pagamento de {self.fvalor} via Pix'
@@ -53,6 +55,7 @@ class Credito(Pagamento):
     def pagar(self, valor):
         try:
             self.valor = valor
+            # código para efetuar o pagamento
             return f'Pagamento de {self.fvalor} via {__class__.__name__} foi CONFIRMADO'
         except Exception as e:
             return f'Falha no pagamento de {self.fvalor} via {__class__.__name__}'
