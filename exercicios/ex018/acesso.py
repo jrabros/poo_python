@@ -21,9 +21,8 @@ try:
         else:
             try:
                 data = date.fromisoformat(str(txtnasc))
-
                 japassou = (hoje.month, hoje.day) >= (data.month, data.day)
-
+                
                 if japassou:
                     idade = hoje.year - data.year
                 else:
