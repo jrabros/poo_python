@@ -14,6 +14,8 @@ def exibir_menu():
 
 def main():
 
+    # cadastro_em_massa() # [ONCE]
+
     if not criar_banco():
         print("Algum problema aconteceu ao criar o banco")
         raise SystemExit
@@ -35,16 +37,13 @@ def main():
                 if not atualizar_pessoa():
                     print("\n[ERRO] Não foi possível atualizar a pessoa")
 
-
             case '4':
                 if not excluir_pessoa():
                     print("\n[ERRO] Não foi possível excluir a pessoa")
 
-
             case '5':
                 if not buscar_pessoa_por_nome():
                     print("\n[ERRO] Não foi possível buscar a pessoa")
-
 
             case '0':
                 print('Saindo...')
@@ -54,5 +53,6 @@ def main():
                 print('ERRO - Escolha um valor entre 0 e 5!')
 
         input('Pressione ENTER para continuar...')
+
 if __name__ == '__main__':
     main()
