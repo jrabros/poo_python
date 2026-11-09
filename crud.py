@@ -64,7 +64,30 @@ def cadastrar_pessoas() -> bool:
 
     
 def listar_pessoas() -> bool:
-    pass
+    try:
+        with sqlite3.connect(NOME_BANCO) as db:
+            cur = db.cursor()
+            cur.execute("SELECT cod, nome, altura FROM pessoas ORDER BY nome;")
+            primeiro = cur.fetchone()
+            if not primeiro:
+                print("AVISO: NENHUM CADASTRO")
+                return True
+            print(f"\n" + '=' * 45)
+            print(f"{'CÓD':<6} {'NOME':<28} {'ALTURA':>8}")
+            print(f"-" * 45)
+
+            vcod, vnome, valtura = primeiro
+            print(f"{vcod:<6} {vnome:<28} {valtura:>8}m")
+
+            for vcod, vnome, valtura in cur:
+                print(f"{vcod:<6} {vnome:<28} {valtura:>8}m")
+
+            print(f"\n" + '=' * 45)
+
+            return True
+    except sqlite3.Error as erro:
+        print(f'[ERRO] falha ao acessar o banco: {erro}')
+        return False
 
 
 def atualizar_pessoa() -> bool:
@@ -76,4 +99,33 @@ def excluir_pessoa() -> bool:
 
 
 def buscar_pessoa_por_nome() -> bool:
-    pass
+    termo = input('Digite o nome (ou parte dele) para buscar: ')
+
+    if not termo:
+        print("[AVISO] Nnehum termo foi informado")
+        return False
+
+    try:
+        with sqlite3.connect(NOME_BANCO) as db:
+            cur = db.cursor()
+            cur.execute("SELECT cod, nome, altura FROM pessoas WHERE nome LIKE ? ORDER BY nome;", (f"%{termo}%",))
+            primeiro = cur.fetchone()
+            if not primeiro:
+                print(f"AVISO: NENHUM CADASTRO COM {termo}.")
+                return True
+            print(f"\n" + '=' * 45)
+            print(f"{'CÓD':<6} {'NOME':<28} {'ALTURA':>8}")
+            print(f"-" * 45)
+
+            vcod, vnome, valtura = primeiro
+            print(f"{vcod:<6} {vnome:<28} {valtura:>8}m")
+
+            for vcod, vnome, valtura in cur:
+                print(f"{vcod:<6} {vnome:<28} {valtura:>8}m")
+
+            print(f"\n" + '=' * 45)
+
+            return True
+    except sqlite3.Error as erro:
+        print(f'[ERRO] falha ao acessar o banco: {erro}')
+        return False
