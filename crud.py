@@ -91,7 +91,52 @@ def listar_pessoas() -> bool:
 
 
 def atualizar_pessoa() -> bool:
-    pass
+    #Listar
+    #Id
+    #Buscar
+    #Novos Dados
+    #Validar
+    #Realizar a alterção
+    listar_pessoas()
+    entrada_cod = input(f"Informe o cód da pessoa a ser alterada: ").strip()
+    if not entrada_cod.isdigit():
+        print("ERRO - Cód inválido")
+        return False
+    vcod = int(entrada_cod)
+    try:
+        with sqlite3.connect(NOME_BANCO) as db:
+            cur = db.cursor()
+            cur.execute("SELECT nome, altura FROM pessoas WHERE cod = ?", (vcod,))
+            pessoa = cur.fetchone()
+
+            if not pessoa:
+                print(f"[ERRO] Pessoa com cód {vcod} não encontrada")
+                return False
+
+            vnome, valtura = pessoa
+            print(f"[ALERTA] Pressione [ENTER] sem digitar nada para manter o valor atual")
+
+            nnome = input(f"Novo nome [{vnome}]").strip()
+            if not nnome:
+                nnome = vnome
+
+            naltura = input(f"Nova altura [{valtura:.2f}m]").strip().replace(",",".")
+            if not naltura:
+                naltura = valtura
+            else:
+                try:
+                    nalturaf = float(naltura)
+                    if nalturaf <= 0 or nalturaf >3:
+                        print("[ERRO] Nova altura inválida.")
+                        return False
+                except ValueError:
+                    print("[ERRO] A Altura deve ser um número real.")    
+                    return False        
+            cur.execute("UPDATE pessoas SET nome = ?, altura = ? WHERE cod = ?;", (nnome, nalturaf, vcod))
+            print(f"Cadastro alterado com sucesso")
+            return True
+    except sqlite3.Error as erro:
+        print(f"[ERRO] Falha no banco: {erro}")
 
 
 def excluir_pessoa() -> bool:
